@@ -2,6 +2,7 @@
 #define TASK_H
 
 #include <QWidget>
+#include <QInputDialog>
 
 namespace Ui
 {
@@ -20,6 +21,12 @@ public:
     QString name();
 
     bool isComplited() const;
+
+public slots:
+    void rename();
+
+signals:
+    void removed(Task *task);
 
 private:
     Ui::Task *ui_;

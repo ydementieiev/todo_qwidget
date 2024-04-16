@@ -21,7 +21,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
     void addTask();
+    void removeTask(Task *task);
 
 private:
     Ui::MainWindow *ui_;

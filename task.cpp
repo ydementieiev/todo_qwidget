@@ -6,6 +6,12 @@ Task::Task(const QString &name, QWidget *parent)
 {
     ui_->setupUi(this);
     setName(name);
+    connect(ui_->editButton, &QPushButton::clicked, this, &Task::rename);
+    connect(ui_->removeButton, &QPushButton::clicked, [this, name]
+            {
+                qDebug() << "Trying to remove" << name;
+                emit removed(this);
+            });
 }
 
 Task::~Task()
@@ -26,4 +32,14 @@ QString Task::name()
 bool Task::isComplited() const
 {
     return ui_->checkBox->isChecked();
+}
+
+void Task::rename()
+{
+    bool ok = false;
+    QString value = QInputDialog::getText(this, tr("Edit task"), tr("Task name"), QLineEdit::Normal, this->name(), &ok);
+    if (ok && !value.isEmpty())
+    {
+        setName(value);
+    }
 }
