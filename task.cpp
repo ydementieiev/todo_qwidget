@@ -12,6 +12,7 @@ Task::Task(const QString &name, QWidget *parent)
                 qDebug() << "Trying to remove" << name;
                 emit removed(this);
             });
+    connect(ui_->checkBox, &QCheckBox::toggled, this, &Task::checked);
 }
 
 Task::~Task()
@@ -37,9 +38,18 @@ bool Task::isComplited() const
 void Task::rename()
 {
     bool ok = false;
+
     QString value = QInputDialog::getText(this, tr("Edit task"), tr("Task name"), QLineEdit::Normal, this->name(), &ok);
     if (ok && !value.isEmpty())
     {
         setName(value);
     }
+}
+
+void Task::checked(bool checked)
+{
+    QFont font(ui_->checkBox->font());
+    font.setStrikeOut(checked);
+    ui_->checkBox->setFont(font);
+    emit statusChanged(this);
 }
