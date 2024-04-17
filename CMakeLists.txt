@@ -12,18 +12,26 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+# Include directories for header files
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/include)
+
+# Specify where the UI files are located
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/src/ui)
+
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+    src/source/main.cpp
+    src/source/mainwindow.cpp
+    src/include/mainwindow.h
+    src/ui/mainwindow.ui
+    src/include/task.h
+    src/source/task.cpp
+    src/ui/task.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(todo_qwidget
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        task.h task.cpp task.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET todo_qwidget APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
